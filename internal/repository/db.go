@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"fmt"
+	_ "modernc.org/sqlite"
 )
 
 // DB connection
