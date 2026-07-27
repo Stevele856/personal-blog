@@ -13,6 +13,7 @@ var ErrUserNotFound = errors.New("user not found")
 // Interface
 type UserRepository interface {
 	GetByUsername(username string) (*model.User, error)
+	Create(u *model.User) error
 }
 
 // Struct
@@ -34,6 +35,24 @@ func (r *sqliteUserRepository) GetByUsername(username string) (*model.User, erro
 		return nil, err
 	}
 	return &u, nil
+}
+
+func (r *sqliteUserRepository) Create(u *model.User) error {
+	result, err := r.db.Exec(
+		"INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, ?)",
+		u.Username, u.PasswordHash, u.CreatedAt,
+	)
+	if err != nil {
+		return err
+	}
+
+	id ,err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+
+	u.ID = int(id)
+	return nil
 }
 
 // Constructor
