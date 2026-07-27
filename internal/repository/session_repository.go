@@ -18,30 +18,22 @@ type sqliteSessionRepository struct {
 	db *sql.DB
 }
 
+const sqliteTimeLayout = "2006-01-02T15:04:05.000Z"
+
 func (r *sqliteSessionRepository) Create(userID int, token string, expiresAt time.Time) error {
-	result, err := r.db.Exec(
+	_, err := r.db.Exec(
 		"INSERT INTO sessions (token, user_id, expires_at) VALUES (?, ?, ?)",
-		token, userID, expiresAt,
+		token, userID, expiresAt.UTC().Format(sqliteTimeLayout),
 	)
 
-	if err != nil {
-		return err
-	}
-
-	id, err := result.LastInsertId()
-	if err != nil {
-		return err
-	}
-
-	userID = int(id)
-	return nil
+	return err
 }
 
 func (r *sqliteSessionRepository) GetUserIDByToken(token string) (int, error) {
 	var uID int
 	err := r.db.QueryRow(
 		"SELECT user_id FROM sessions WHERE token = ? AND expires_at > ?",
-		token, time.Now().UTC().Format(time.RFC3339),
+		token, time.Now().UTC().Format(sqliteTimeLayout),
 	).Scan(&uID)
 
 	if errors.Is(err, sql.ErrNoRows) {

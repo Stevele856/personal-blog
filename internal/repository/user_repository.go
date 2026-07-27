@@ -39,8 +39,8 @@ func (r *sqliteUserRepository) GetByUsername(username string) (*model.User, erro
 
 func (r *sqliteUserRepository) Create(u *model.User) error {
 	result, err := r.db.Exec(
-		"INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, ?)",
-		u.Username, u.PasswordHash, u.CreatedAt,
+		"INSERT INTO users (username, password_hash) VALUES (?, ?)",
+		u.Username, u.PasswordHash,
 	)
 	if err != nil {
 		return err
