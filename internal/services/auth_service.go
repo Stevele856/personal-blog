@@ -76,3 +76,7 @@ func (s *UserService) ValidateSession(token string) (int, error) {
 
 	
 }
+
+func (s *UserService) Logout(token string) error {
+    return s.sessionRepo.Delete(token)
+}

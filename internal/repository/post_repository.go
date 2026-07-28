@@ -11,6 +11,8 @@ var ErrPostNotFound = errors.New("post not found")
 
 type PostRepository interface {
 	List(publishedOnly bool) ([]model.Post, error)
+	// Get all posts (published + draft)
+	ListAll() ([]model.Post, error)
 	GetBySlug(slug string) (*model.Post, error)
 	Create(p *model.Post) error
 	Update(p *model.Post) error
@@ -43,6 +45,25 @@ func (r *sqlitePostRepository) List(publishedOnly bool) ([]model.Post, error) {
 
 	return posts, nil
 }
+
+func (r *sqlitePostRepository) ListAll() ([]model.Post, error){
+	rows, err := r.db.Query("SELECT id, title, slug, content, published, created_at, updated_at FROM posts ORDERED BY created_at DESC")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var posts []model.Post
+	for rows.Next(){
+		var p model.Post
+		if err := rows.Scan(&p.ID, &p.Title, &p.Slug, &p.Content, &p.Published, &p.CreatedAt, &p.UpdatedAt); err != nil {
+			return nil, err
+		}
+
+		posts = append(posts, p)
+	}
+	return posts, err
+}	
 
 func (r *sqlitePostRepository) GetBySlug(slug string) (*model.Post, error) {
 	var p model.Post
