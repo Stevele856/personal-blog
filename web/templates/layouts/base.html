@@ -1,0 +1,9 @@
+{{define "layout"}}<!DOCTYPE html>
+<html>
+    <body>
+        {{template "header" .}}
+        {{block "content" .}}{{end}}
+        {{template "footer" .}}
+    </body>
+</html>
+{{end}}
