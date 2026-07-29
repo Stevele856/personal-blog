@@ -64,3 +64,7 @@ func (r *sqliteSessionRepository) Delete(token string) error {
 
 	return nil
 }
+
+func NewSessionRepository(db *sql.DB) SessionRepository {
+	return &sqliteSessionRepository{db: db}
+}
