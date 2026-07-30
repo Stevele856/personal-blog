@@ -73,8 +73,6 @@ func (s *UserService) ValidateSession(token string) (int, error) {
 	}
 
 	return uID, nil
-
-	
 }
 
 func (s *UserService) Logout(token string) error {
