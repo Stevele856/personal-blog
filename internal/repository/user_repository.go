@@ -21,7 +21,6 @@ type sqliteUserRepository struct {
 	db *sql.DB
 }
 
-// Define sqliteUserRepository
 func (r *sqliteUserRepository) GetByUsername(username string) (*model.User, error) {
 	var u model.User
 	err := r.db.QueryRow("SELECT id, username, password_hash, created_at FROM users WHERE username = ?",
