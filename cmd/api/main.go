@@ -10,6 +10,7 @@ import (
 	"github.com/letrongvu/blog/internal/repository"
 	"github.com/letrongvu/blog/internal/services"
 	"github.com/letrongvu/blog/internal/view"
+	"github.com/letrongvu/blog/migration"
 	"github.com/letrongvu/blog/web"
 )
 
@@ -24,12 +25,17 @@ func main() {
 		dbPath = "./blog.db"
 	}
 
-	// Call NewDB
+	// Open NewDB
 	db, err := repository.NewDB(dbPath)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
+
+	// Call migrate after open DB, before create repo
+	if err := repository.Migrate(db,migration.FS); err != nil {
+		log.Fatal(err)
+	}
 
 	postRepo := repository.NewPostRepository(db)
 	postService := services.NewPostService(postRepo)
