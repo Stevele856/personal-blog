@@ -43,6 +43,9 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /{$}", postHandler.Home)
+	mux.HandleFunc("GET /about", postHandler.About)
+	mux.HandleFunc("GET /posts/{slug}", postHandler.Post)
+	mux.HandleFunc("/", postHandler.NotFound)
 
 	log.Println("listening on :8080")
 	log.Fatal(http.ListenAndServe(":8080", middleware.Recover(mux)))
