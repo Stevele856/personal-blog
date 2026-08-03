@@ -75,6 +75,10 @@ func (s *PostService) Delete(id int) error {
 	return s.postRepo.Delete(id)
 }
 
+func (s *PostService) GetByID(id int) (*model.Post, error){
+	return s.postRepo.GetByID(id)
+}
+
 // Define slugify
 func slugify(title string) string {
 	var s strings.Builder

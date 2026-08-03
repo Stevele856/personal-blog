@@ -17,6 +17,8 @@ type PostRepository interface {
 	Create(p *model.Post) error
 	Update(p *model.Post) error
 	Delete(id int) error
+	//080326 Add GetByID - edit form need an post ID to Populating data into a post_form.html
+	GetByID(id int) (*model.Post, error)
 }
 
 type sqlitePostRepository struct {
@@ -145,6 +147,23 @@ func (r *sqlitePostRepository) Delete(id int) error {
 	}
 
 	return nil
+}
+
+func (r *sqlitePostRepository) GetByID(id int) (*model.Post, error) {
+	var p model.Post
+	err := r.db.QueryRow("SELECT id, title, slug, content, published, created_at, updated_at FROM posts WHERE id = ?",
+		id,
+	).Scan(&p.ID, &p.Title, &p.Slug, &p.Content, &p.Published, &p.CreatedAt, &p.UpdatedAt)
+
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil, ErrPostNotFound
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &p, nil
 }
 
 func NewPostRepository(db *sql.DB) PostRepository {

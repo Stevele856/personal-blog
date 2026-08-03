@@ -39,12 +39,30 @@ func main() {
 
 	postRepo := repository.NewPostRepository(db)
 	postService := services.NewPostService(postRepo)
-	postHandler := handler.New(postService)
+
+	userRepo := repository.NewUserRepository(db)
+	sessionRepo := repository.NewSessionRepository(db)
+	userService := services.NewUserService(userRepo, sessionRepo)
+
+	postHandler := handler.New(postService, userService)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /{$}", postHandler.Home)
 	mux.HandleFunc("GET /about", postHandler.About)
 	mux.HandleFunc("GET /posts/{slug}", postHandler.Post)
+
+	mux.HandleFunc("GET /login", postHandler.LoginForm)
+	mux.HandleFunc("POST /login", postHandler.Login)
+	mux.HandleFunc("POST /logout", postHandler.Logout)
+
+	auth := middleware.RequireAuth(userService)
+	mux.Handle("GET /admin", auth(http.HandlerFunc(postHandler.Dashboard)))
+	mux.Handle("GET /admin/posts/new", auth(http.HandlerFunc(postHandler.NewPostForm)))
+	mux.Handle("POST /admin/posts", auth(http.HandlerFunc(postHandler.CreatePost)))
+	mux.Handle("GET /admin/posts/{id}/edit", auth(http.HandlerFunc(postHandler.EditPostForm)))
+	mux.Handle("POST /admin/posts/{id}", auth(http.HandlerFunc(postHandler.UpdatePost)))
+	mux.Handle("POST /admin/posts/{id}/delete", auth(http.HandlerFunc(postHandler.DeletePost)))
+	
 	mux.HandleFunc("/", postHandler.NotFound)
 
 	log.Println("listening on :8080")
