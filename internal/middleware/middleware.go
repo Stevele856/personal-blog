@@ -27,13 +27,13 @@ func RequireAuth(validator SessionValidator) func(http.Handler) http.Handler{
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			cookie, err := r.Cookie(SessionCookieName)
 			if err != nil {
-				http.Redirect(w,r,"/admin/login", http.StatusSeeOther)
+				http.Redirect(w,r,"/login", http.StatusSeeOther)
 				return
 			}
 
 			userID, err := validator.ValidateSession(cookie.Value)
 			if err != nil {
-				http.Redirect(w,r, "/admin/login", http.StatusSeeOther)
+				http.Redirect(w,r, "/login", http.StatusSeeOther)
 				return
 			}
 
