@@ -1,0 +1,22 @@
+{{define "content"}}
+<h1>Dashboard</h1>
+<a href="/admin/posts/new">New post</a>
+<table>
+    <tr><th>Title</th><th>Published</th><th>Actions</th></tr>
+    {{range .Data}}
+    <tr>
+        <td>{{.Title}}</td>
+        <td>{{.Published}}</td>
+        <td>
+            <a href="/admin/posts/{{.ID}}/edit">Edit</a>
+            <form action="/admin/posts/{{.ID}}/delete" method="post" style="display:inline">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {{end}}
+</table>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+{{end}}

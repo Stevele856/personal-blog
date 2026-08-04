@@ -1,0 +1,17 @@
+{{define "content"}}
+<h1>Post form</h1>
+{{if .Data}}
+    {{if .Data.ID}}
+    <form action="/admin/posts/{{.Data.ID}}" method="post">
+        {{else}}
+        <form action="/admin/posts" method="post">
+        {{end}}
+{{else}}
+    <form action="/admin/posts" method="post">
+{{end}}
+        <input type="text" name="title" placeholder="Title" value="{{if .Data}}{{.Data.Title}}{{end}}" required>
+        <textarea name="content" placeholder="Content">{{if .Data}}{{.Data.Content}}{{end}}</textarea>
+        <label><input type="checkbox" name="published" {{if .Data}}{{if .Data.Published}}cheked{{end}}{{end}}>Published</label>
+        <button type="submit">Save</button>
+    </form>
+{{end}}
