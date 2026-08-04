@@ -1,5 +1,6 @@
 {{define "content"}}
 <h1>Post form</h1>
+{{if .Error}}<p style="color:red">{{.Error}}</p>{{end}}
 {{if .Data}}
     {{if .Data.ID}}
     <form action="/admin/posts/{{.Data.ID}}" method="post">

@@ -22,7 +22,7 @@ func (h *Handler) CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	if _, err := h.postService.Create(title, content, published); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		view.Render(w, "post_form.html", view.PageData{Data: err.Error()})
+		view.Render(w, "post_form.html", view.PageData{Error: err.Error()})
 		return
 	}
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
@@ -63,7 +63,7 @@ func (h *Handler) UpdatePost(w http.ResponseWriter, r *http.Request) {
 
 	if err := h.postService.Update(id, title, content, published); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		view.Render(w, "post_form.html", view.PageData{Data: err.Error()})
+		view.Render(w, "post_form.html", view.PageData{Error: err.Error()})
 		return
 	}
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
