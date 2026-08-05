@@ -1,0 +1,8 @@
+{
+    "name": "personal=blog",
+    "private": true,
+    "dependencies": {
+        "tailwindcss": "4.3.3",
+        "@tailwindcss/cli":"4.3.3"
+    }
+}

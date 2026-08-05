@@ -63,6 +63,7 @@ func main() {
 	mux.Handle("POST /admin/posts/{id}", auth(http.HandlerFunc(postHandler.UpdatePost)))
 	mux.Handle("POST /admin/posts/{id}/delete", auth(http.HandlerFunc(postHandler.DeletePost)))
 	
+	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServerFS(web.Static)))
 	mux.HandleFunc("/", postHandler.NotFound)
 
 	log.Println("listening on :8080")
