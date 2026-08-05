@@ -12,7 +12,7 @@
 {{end}}
         <input type="text" name="title" placeholder="Title" value="{{if .Data}}{{.Data.Title}}{{end}}" required>
         <textarea name="content" placeholder="Content">{{if .Data}}{{.Data.Content}}{{end}}</textarea>
-        <label><input type="checkbox" name="published" {{if .Data}}{{if .Data.Published}}cheked{{end}}{{end}}>Published</label>
+        <label><input type="checkbox" name="published" {{if .Data}}{{if .Data.Published}}checked{{end}}{{end}}>Published</label>
         <button type="submit">Save</button>
     </form>
 {{end}}

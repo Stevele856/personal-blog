@@ -20,7 +20,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	token, err := h.userService.Login(username, password)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
-		view.Render(w, "login.html", view.PageData{Data: "Invalid username or password"})
+		view.Render(w, "login.html", view.PageData{Error: "Invalid username or password"})
 		return
 	}
 

@@ -1,5 +1,5 @@
 {
-    "name": "personal=blog",
+    "name": "personal-blog",
     "private": true,
     "dependencies": {
         "tailwindcss": "4.3.3",
