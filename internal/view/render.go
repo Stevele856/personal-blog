@@ -6,13 +6,16 @@ import (
 	"html/template"
 	"io"
 	"io/fs"
+	"os"
 	"path"
 )
 
 var funcMap = template.FuncMap{}
 var pages map[string]*template.Template
+var sourceFS fs.FS
 
 func Init(fsys fs.FS) error {
+	sourceFS = fsys
 	base, err := template.New("layout").Funcs(funcMap).ParseFS(fsys,
 		"layouts/*.html",
 		"partials/*.html",
@@ -55,6 +58,11 @@ func Init(fsys fs.FS) error {
 }
 
 func Render(w io.Writer, page string, data any) error {
+	if os.Getenv("APP_ENV") == "dev" {
+		if err := Init(sourceFS); err != nil {
+			return fmt.Errorf("view: dev re-init: %w", err)
+		}
+	}
 	t, ok := pages[page]
 	if !ok {
 		return fmt.Errorf("view: page %q not registered", page)
