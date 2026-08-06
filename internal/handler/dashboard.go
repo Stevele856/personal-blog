@@ -15,7 +15,7 @@ func (h *Handler) Dashboard(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	if err := view.Render(w, "dashboard.html", view.PageData{Data: posts}); err != nil {
+	if err := view.Render(w, "dashboard.html", view.PageData{Data: posts, CurrentUser: h.currentUser(r)}); err != nil {
 		log.Printf("dashboard: render: %v", err)
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 	}

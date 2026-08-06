@@ -12,7 +12,7 @@ import (
 
 // CRUD post
 func (h *Handler) NewPostForm(w http.ResponseWriter, r *http.Request) {
-	view.Render(w, "post_form.html", view.PageData{})
+	view.Render(w, "post_form.html", view.PageData{CurrentUser: h.currentUser(r)})
 }
 
 func (h *Handler) CreatePost(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +22,7 @@ func (h *Handler) CreatePost(w http.ResponseWriter, r *http.Request) {
 
 	if _, err := h.postService.Create(title, content, published); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		view.Render(w, "post_form.html", view.PageData{Error: err.Error()})
+		view.Render(w, "post_form.html", view.PageData{Error: err.Error(), CurrentUser: h.currentUser(r)})
 		return
 	}
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
@@ -47,7 +47,7 @@ func (h *Handler) EditPostForm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	view.Render(w, "post_form.html", view.PageData{Data: post})
+	view.Render(w, "post_form.html", view.PageData{Data: post, CurrentUser: h.currentUser(r)})
 }
 
 func (h *Handler) UpdatePost(w http.ResponseWriter, r *http.Request) {
@@ -63,7 +63,7 @@ func (h *Handler) UpdatePost(w http.ResponseWriter, r *http.Request) {
 
 	if err := h.postService.Update(id, title, content, published); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		view.Render(w, "post_form.html", view.PageData{Error: err.Error()})
+		view.Render(w, "post_form.html", view.PageData{Error: err.Error(), CurrentUser: h.currentUser(r)})
 		return
 	}
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)

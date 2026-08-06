@@ -78,3 +78,7 @@ func (s *UserService) ValidateSession(token string) (int, error) {
 func (s *UserService) Logout(token string) error {
     return s.sessionRepo.Delete(token)
 }
+
+func (s *UserService) GetByID(id int) (*model.User, error) {
+	return s.userRepo.GetByID(id)
+}
