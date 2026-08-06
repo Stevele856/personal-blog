@@ -1,18 +1,34 @@
+{{define "title"}}{{if .Data}}Edit post{{else}}New post{{end}}{{end}}
 {{define "content"}}
-<h1>Post form</h1>
-{{if .Error}}<p style="color:red">{{.Error}}</p>{{end}}
-{{if .Data}}
-    {{if .Data.ID}}
-    <form action="/admin/posts/{{.Data.ID}}" method="post">
-        {{else}}
-        <form action="/admin/posts" method="post">
-        {{end}}
-{{else}}
-    <form action="/admin/posts" method="post">
+<h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-fg mb-10">
+    {{if .Data}}Edit post{{else}}New post{{end}}
+</h1>
+
+{{if .Error}}
+<p class="mb-6 text-xs tracking-widest uppercase text-accent border border-accent px-4 py-3">/// {{.Error}}</p>
 {{end}}
-        <input type="text" name="title" placeholder="Title" value="{{if .Data}}{{.Data.Title}}{{end}}" required>
-        <textarea name="content" placeholder="Content">{{if .Data}}{{.Data.Content}}{{end}}</textarea>
-        <label><input type="checkbox" name="published" {{if .Data}}{{if .Data.Published}}checked{{end}}{{end}}>Published</label>
-        <button type="submit">Save</button>
-    </form>
+
+{{if .Data}}{{if .Data.ID}}
+<form action="/admin/posts/{{.Data.ID}}" method="post" class="space-y-6 max-w-2xl">
+{{else}}
+<form action="/admin/posts" method="post" class="space-y-6 max-w-2xl">
+{{end}}{{else}}
+<form action="/admin/posts" method="post" class="space-y-6 max-w-2xl">
+{{end}}
+    <div>
+        <label class="block text-[11px] tracking-widest uppercase text-text-body mb-1">Title</label>
+        <input type="text" name="title" value="{{if .Data}}{{.Data.Title}}{{end}}" required
+            class="w-full bg-transparent border border-line px-3 py-2 text-fg focus:outline-none focus:border-accent transition-colors">
+    </div>
+    <div>
+        <label class="block text-[11px] tracking-widest uppercase text-text-body mb-1">Content</label>
+        <textarea name="content" rows="14" required
+            class="w-full bg-transparent border border-line px-3 py-2 text-fg focus:outline-none focus:border-accent transition-colors">{{if .Data}}{{.Data.Content}}{{end}}</textarea>
+    </div>
+    <label class="flex items-center gap-2 text-[11px] tracking-widest uppercase text-text-body">
+        <input type="checkbox" name="published" class="accent-accent" {{if .Data}}{{if .Data.Published}}checked{{end}}{{end}}>
+        Published
+    </label>
+    <button type="submit" class="border border-fg px-6 py-3 text-xs tracking-widest uppercase text-fg hover:bg-fg hover:text-bg transition-colors">Save</button>
+</form>
 {{end}}

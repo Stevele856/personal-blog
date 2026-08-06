@@ -1,22 +1,33 @@
+{{define "title"}}Dashboard{{end}}
 {{define "content"}}
-<h1>Dashboard</h1>
-<a href="/admin/posts/new">New post</a>
-<table>
-    <tr><th>Title</th><th>Published</th><th>Actions</th></tr>
+<div class="flex items-center justify-between mb-10">
+    <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-fg">Dashboard</h1>
+    <a href="/admin/posts/new" class="text-xs tracking-widest uppercase border border-fg px-4 py-2 text-fg hover:bg-fg hover:text-bg transition-colors">+ New post</a>
+</div>
+
+{{if .Data}}
+<div class="border border-line grid grid-cols-[1fr_120px_140px] gap-px bg-line text-sm">
+    <div class="bg-bg px-4 py-3 text-[11px] tracking-widest uppercase text-text-body">Title</div>
+    <div class="bg-bg px-4 py-3 text-[11px] tracking-widest uppercase text-text-body">Status</div>
+    <div class="bg-bg px-4 py-3 text-[11px] tracking-widest uppercase text-text-body">Actions</div>
     {{range .Data}}
-    <tr>
-        <td>{{.Title}}</td>
-        <td>{{.Published}}</td>
-        <td>
-            <a href="/admin/posts/{{.ID}}/edit">Edit</a>
-            <form action="/admin/posts/{{.ID}}/delete" method="post" style="display:inline">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
+    <div class="bg-bg px-4 py-3 font-bold text-fg truncate">{{.Title}}</div>
+    <div class="bg-bg px-4 py-3 text-[11px] tracking-widest uppercase {{if .Published}}text-accent{{else}}text-text-body{{end}}">
+        {{if .Published}}Published{{else}}Draft{{end}}
+    </div>
+    <div class="bg-bg px-4 py-3 flex items-center gap-4 text-[11px] tracking-widest uppercase">
+        <a href="/admin/posts/{{.ID}}/edit" class="text-fg hover:text-accent transition-colors">Edit</a>
+        <form action="/admin/posts/{{.ID}}/delete" method="post">
+            <button type="submit" class="text-fg hover:text-accent transition-colors">Delete</button>
+        </form>
+    </div>
     {{end}}
-</table>
-<form action="/logout" method="post">
-    <button type="submit">Logout</button>
+</div>
+{{else}}
+<p class="py-12 text-xs tracking-widest uppercase text-text-body border-t border-line">[ No posts yet ]</p>
+{{end}}
+
+<form action="/logout" method="post" class="mt-10">
+    <button type="submit" class="text-[11px] tracking-widest uppercase text-text-body hover:text-accent transition-colors">Logout &gt;&gt;&gt;</button>
 </form>
 {{end}}

@@ -1,1 +1,26 @@
-{{define "content"}}<h1>About</h1>{{end}}
+{{define "title"}}About{{end}}
+{{define "content"}}
+<div class="max-w-2xl">
+    <h1 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-fg mb-10">
+        About<span class="text-accent">.</span>
+    </h1>
+
+    <!--
+        HƯỚNG DẪN: thay nội dung placeholder bên dưới bằng bio thật của bạn.
+        Gợi ý cấu trúc (không cần dài, ~150-300 từ):
+        1) Bạn là ai, đang làm gì.
+        2) Blog này viết về chủ đề gì và vì sao bạn viết.
+        3) (Tuỳ chọn) cách liên hệ.
+        Giọng thân mật thường hợp blog cá nhân hơn trang trọng.
+    -->
+    <div class="space-y-6 leading-relaxed text-fg/90">
+        <p>[ TODO: Giới thiệu ngắn về bạn — bạn là ai, đang làm gì. ]</p>
+        <p>[ TODO: Blog này viết về chủ đề gì, và vì sao bạn viết nó. ]</p>
+    </div>
+
+    <dl class="mt-12 pt-8 border-t border-line grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-[11px] tracking-widest uppercase text-text-body">
+        <dt>Contact</dt>
+        <dd>[ TODO: email / github / social ]</dd>
+    </dl>
+</div>
+{{end}}

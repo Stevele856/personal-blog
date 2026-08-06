@@ -1,2 +1,14 @@
 <!-- trigger data from *model.Post through .Data -->
-{{define "content"}}<h1>{{.Data.Title}}</h1><div>{{.Data.Content}}</div>{{end}}
+{{define "title"}}<h1>{{.Data.Title}}{{end}}
+{{define "content"}}
+<article>
+    <div class="mb-10">
+        <a href="/" class="text-[11px] tracking-widest uppercase text-text-body hover:text-accent transition-colors">&lt;&lt;&lt; Back to index</a>
+    </div>
+    <header class="mb-10 pb-6 border-b border-line">
+        <h1 class="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-[0.95] text-fg">{{.Data.Title}}</h1>
+        <time class="mt-4 block text-[11px] tracking-widest uppercase text-text-body">Posted // {{.Data.CreatedAt}}</time>
+    </header>
+    <div class="whitespace-pre-wrap leading-relaxed text-fg/90">{{.Data.Content}}</div>
+</article>
+{{end}}

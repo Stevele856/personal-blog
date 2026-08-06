@@ -1,7 +1,22 @@
+{{define "title"}}Home{{end}}
 {{define "content"}}
-<ul>
+<section class="mb-16">
+    <h1 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-fg">
+        Blog<span class="text-accent">.</span>
+    </h1>
+    <p class="mt-4 text-xs tracking-widest uppercase text-text-body">/// Ghi chép kỹ thuật &amp; cá nhân</p>
+</section>
+
+<section class="border-t border-line">
+    {{if .Data}}
     {{range .Data}}
-    <li><a href="/posts/{{.Slug}}">{{.Title}}</a></li>
-{{end}}
-</ul>
+    <a href="/posts/{{.Slug}}" class="group grid grid-cols-[1fr_auto] gap-4 items-baseline py-6 px-2 -mx-2 border-b border-line hover:bg-fg/5 transition-colors">
+        <span class="text-lg md:text-xl font-bold uppercase tracking-tight text-fg group-hover:text-accent transition-colors">{{.Title}}</span>
+        <time class="text-[11px] tracking-widest uppercase text-text-body whitespace-nowrap">{{.CreatedAt}}</time>
+    </a>
+    {{end}}
+    {{else}}
+    <p class="py-12 text-xs tracking-widest uppercase text-text-body">[ No entries logged ]</p>
+    {{end}}
+</section>
 {{end}}

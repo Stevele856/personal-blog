@@ -1,10 +1,28 @@
+{{define "title"}}Login{{end}}
 {{define "content"}}
-<h1>Login</h1>
-<!-- if .Data use to show error alert when login handler trigger wrong username/password -->
-{{if .Data}}<p>{{.Data}}</p>{{end}} 
-<form action="/login" method="post">
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button type="submit">Login</button>
-</form>
+<div class="max-w-sm mx-auto py-12">
+    <h1 class="text-3xl font-black uppercase tracking-tighter text-fg mb-1">[ Access ]</h1>
+    <p class="text-[11px] tracking-widest uppercase text-text-body mb-8">Authentication required</p>
+
+    {{if .Error}}
+    <p class="mb-6 text-xs tracking-widest uppercase text-accent border border-accent px-4 py-3">/// {{.Error}}</p>
+    {{end}}
+
+    <form action="/login" method="post" class="space-y-4">
+        <div>
+            <label class="block text-[11px] tracking-widest uppercase text-text-body mb-1">Username</label>
+            <input type="text" name="username" required
+                class="w-full bg-transparent border border-line px-3 py-2 text-fg focus:outline-none focus:border-accent transition-colors">
+        </div>
+        <div>
+            <label class="block text-[11px] tracking-widest uppercase text-text-body mb-1">Password</label>
+            <input type="password" name="password" required
+                class="w-full bg-transparent border border-line px-3 py-2 text-fg focus:outline-none focus:border-accent transition-colors">
+        </div>
+        <button type="submit"
+            class="w-full mt-2 border border-fg px-4 py-3 text-xs tracking-widest uppercase text-fg hover:bg-fg hover:text-bg transition-colors">
+            Authenticate
+        </button>
+    </form>
+</div>
 {{end}}

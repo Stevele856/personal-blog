@@ -99,6 +99,7 @@ Admin (bọc `middleware.RequireAuth(userService)`):
 - ~~`auth.go` (Login) dùng `Data:` thay vì `Error:` cho message lỗi~~ — đã fix, giờ dùng `Error:`.
 - ~~`package.json:2` typo `personal=blog`~~ — đã fix, đúng `personal-blog`.
 - ~~Chưa test full CRUD end-to-end qua browser thật~~ — **đã test xong, CRUD hoạt động đúng** (tạo bài → xuất hiện ở Home → sửa bỏ publish → biến mất khỏi Home → xoá).
+- ~~`PageData.CurrentUser` không bao giờ được gán~~ — không handler nào từng set field này nên header không bao giờ hiện `Dashboard`/`Logout` dù đã đăng nhập. Đã fix: thêm `UserRepository.GetByID` + `UserService.GetByID`, thêm helper `Handler.currentUser(r)` đọc `userID` từ context (do `RequireAuth` set) rồi tra ra `*model.User`; áp dụng cho `Dashboard`, `NewPostForm`, `EditPostForm`, và 2 nhánh lỗi của `CreatePost`/`UpdatePost`. **Phạm vi fix chỉ ở trang admin** — trang public (Home/About/Post) chưa qua `RequireAuth` nên header vẫn không nhận diện login ở đó (chưa cần thiết, xem quyết định đã chốt).
 
 ## Việc CÒN LẠI để hoàn thành 100% dự án
 
@@ -117,13 +118,14 @@ Admin (bọc `middleware.RequireAuth(userService)`):
 - [ ] CSRF protection cho form admin (POST login/create/update/delete) — ưu tiên thấp (chỉ 1 admin dùng), nhưng nên làm trước khi thật sự public.
 
 ### Nhóm 4 — Polish nội dung
-- [ ] Nội dung thật cho `about.html`, `404.html` (hiện chỉ placeholder 1 dòng).
+- [x] Thiết kế UI thật bằng Tailwind cho toàn bộ trang (`base.html`, `header.html`, `footer.html`, `home.html`, `post.html`, `about.html`, `404.html`, `login.html`, `admin/dashboard.html`, `admin/post_form.html`) — theo hệ thống dark/tactical (token màu `bg/fg/text-body/accent/line`, font mono toàn site).
+- [x] Nội dung thật cho `404.html`.
+- [ ] **`about.html` vẫn còn placeholder `[ TODO: ... ]`** — đã có khung/style hoàn chỉnh, chỉ còn thiếu nội dung bio thật (giới thiệu bản thân, chủ đề blog, liên hệ).
 - [ ] Viết test (hiện có 0 file `_test.go` trong toàn bộ project) — ít nhất nên có test cho `PostService`/`UserService` (validate, slugify, login logic).
-- [ ] Thiết kế UI thật cho `home.html`, `post.html`, `dashboard.html`, `post_form.html`, `login.html` bằng Tailwind (hiện chỉ có 1 style test ở `home.html`, còn lại HTML thô không class).
 
 ### Nhóm 5 — Đa ngôn ngữ (i18n) — mới phát sinh, chưa bắt đầu
 - [x] Quyết định: ưu tiên tiếng Anh trước (English-first), tiếng Việt làm sau.
-- [ ] `<html lang="...">` ở `base.html` cần đổi thành `en` cho khớp ưu tiên hiện tại (tạm thời, chưa có cơ chế chọn locale động).
+- [x] `<html lang="...">` ở `base.html` đổi thành `en`.
 - [ ] Footer đã có 2 link `VI`/`EN` placeholder (`web/templates/partials/footer.html`, trỏ `href="/"`, chưa có logic thật) — cần thiết kế cơ chế xác định locale (path `/en/...`, query param, hoặc cookie) trước khi làm route thật.
 - [ ] Nội dung song ngữ cho trang tĩnh (`about.html`, `404.html`...) và bài viết — chưa quyết định cách lưu trữ bản dịch (route/trang riêng theo locale? field riêng trong DB `posts`?).
 
