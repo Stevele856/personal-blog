@@ -1,13 +1,19 @@
 {{define "layout"}}<!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{block "title" .}}Blog{{end}}</title>
         <link rel="stylesheet" href="/static/css/output.css">
     </head>
-    <body>
+    <body class="bg-bg text-fg font-mono min-h-screen flex flex-col antialiased">
         {{template "header" .}}
-        {{block "content" .}}{{end}}
+        <main class="flex-1 w-full max-w-4xl mx-auto px-4 md:px-6 py-10">
+            {{block "content" .}}{{end}}
+        </main>
         {{template "footer" .}}
     </body>
 </html>
 {{end}}
+
+

@@ -121,6 +121,12 @@ Admin (bọc `middleware.RequireAuth(userService)`):
 - [ ] Viết test (hiện có 0 file `_test.go` trong toàn bộ project) — ít nhất nên có test cho `PostService`/`UserService` (validate, slugify, login logic).
 - [ ] Thiết kế UI thật cho `home.html`, `post.html`, `dashboard.html`, `post_form.html`, `login.html` bằng Tailwind (hiện chỉ có 1 style test ở `home.html`, còn lại HTML thô không class).
 
+### Nhóm 5 — Đa ngôn ngữ (i18n) — mới phát sinh, chưa bắt đầu
+- [x] Quyết định: ưu tiên tiếng Anh trước (English-first), tiếng Việt làm sau.
+- [ ] `<html lang="...">` ở `base.html` cần đổi thành `en` cho khớp ưu tiên hiện tại (tạm thời, chưa có cơ chế chọn locale động).
+- [ ] Footer đã có 2 link `VI`/`EN` placeholder (`web/templates/partials/footer.html`, trỏ `href="/"`, chưa có logic thật) — cần thiết kế cơ chế xác định locale (path `/en/...`, query param, hoặc cookie) trước khi làm route thật.
+- [ ] Nội dung song ngữ cho trang tĩnh (`about.html`, `404.html`...) và bài viết — chưa quyết định cách lưu trữ bản dịch (route/trang riêng theo locale? field riêng trong DB `posts`?).
+
 ### Nhóm nhỏ — fix bug tồn đọng (nên làm sớm, rẻ)
 - [x] Sửa `cheked` → `checked`.
 - [x] Đổi `Login` sang dùng `Error:` thay vì `Data:` cho đồng bộ.

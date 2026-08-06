@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@theme {
+    --color-bg: #0A0A0A;
+    --color-fg: #EAEAEA;
+    --color-text-body: #A1A1A1;
+    --color-accent: #00BCFF;
+    --color-line: #262626;
+}
+
+@layer base {
+    body {
+        background-color: var(--color-bg);
+        color: var(--color-fg);
+    }
+}

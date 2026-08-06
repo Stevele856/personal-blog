@@ -1,1 +1,21 @@
-{{define "header"}}<header>HEADER</header>{{end}}
+{{define "header"}}
+<header class="border-b border-zinc-800">
+    <div class="max-w-4xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+        <a href="/" class="text-lg font-black tracking-tight text-fg">vult<span class="text-cyan-400">.</span>me</a>
+        <nav class="flex items-center gap-8 text-xs tracking-widest uppercase text-fg/60">
+            <a href="/" class="hover:text-accent transition-colors">Home</a>
+            <a href="/about" class="hover:text-accent transition-colors">About</a>
+            <a href="/" class="hover:text-accent transition-colors">Skills</a>
+            <a href="/" class="hover:text-accent transition-colors">Projects</a>
+            <a href="/" class="hover:text-accent transition-colors">Articles</a>
+            
+            {{if .CurrentUser}}
+            <a href="/admin" class="hover:text-fg transition-colors">Dashboard</a>
+            <form action="/logout" method="post" class="inline">
+                <button type="submit" class="hover:text-accent transition-colors">Logout</button>
+            </form>
+            {{end}}
+        </nav>
+    </div>
+</header>
+{{end}}
